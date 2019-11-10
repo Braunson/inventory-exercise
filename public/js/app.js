@@ -1918,6 +1918,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       postSuccess: false,
       postError: false,
+      postErrorMessage: null,
       qualtity: this.$refs.qty
     };
   },
@@ -1930,21 +1931,31 @@ __webpack_require__.r(__webpack_exports__);
 
       // Reset the states
       this.postSuccess = false;
-      this.postError = false; // Build the form
+      this.postError = false;
+      this.postErrorMessage = null; // Build the form
 
       var formData = new FormData();
       formData.append('quantity', this.$refs.qty.quantity); // Submit the form
 
       axios.post(this.action, formData).then(function (response) {
         if (response.status == '200') {
-          _this.postSuccess = true;
+          _this.postSuccess = true; // Update the qty on the view
+
+          _this.product.stock_text = response.data.stock_text; // Update the quantity
+
+          _this.product.quantity = response.data.quantity;
+          _this.$refs.qty.maxQuantity = response.data.quantity;
         } else {
           _this.postError = true;
         }
       })["catch"](function (error) {
         if (error.response.status == '401') {
-          window.location.href = '/login?back=/home';
+          window.location.href = '/login';
+        } else if (error.response.status == '400') {
+          _this.postError = true;
+          _this.postErrorMessage = error.response.data;
         } else {
+          _this.postError = true;
           console.error(error);
           throw error;
         }
@@ -37340,7 +37351,10 @@ var render = function() {
       _vm.postError
         ? _c("div", { staticClass: "col-md-8 alert alert-danger" }, [
             _c("p", { staticClass: "m-0" }, [
-              _vm._v("The purchase failed, please try again.")
+              _vm._v(
+                "The purchase failed, please try again. " +
+                  _vm._s(this.postErrorMessage)
+              )
             ])
           ])
         : _vm._e()

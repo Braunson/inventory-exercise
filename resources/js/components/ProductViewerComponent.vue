@@ -5,7 +5,7 @@
                 <p class="m-0">The purchase was made successfully</p>
             </div>
             <div class="col-md-8 alert alert-danger" v-if="postError">
-                <p class="m-0">The purchase failed, please try again.</p>
+                <p class="m-0">The purchase failed, please try again. {{ this.postErrorMessage }}</p>
             </div>
         </div>
         <div class="row justify-content-center product-page-view">
@@ -81,6 +81,7 @@
             return {
                 postSuccess: false,
                 postError: false,
+                postErrorMessage: null,
                 qualtity: this.$refs.qty
             };
         },
@@ -94,24 +95,36 @@
                 // Reset the states
                 this.postSuccess = false;
                 this.postError = false;
+                this.postErrorMessage = null;
 
                 // Build the form
                 let formData = new FormData();
                 formData.append('quantity', this.$refs.qty.quantity);
-
+                
                 // Submit the form
                 axios.post(this.action, formData)
                     .then((response) => {
                         if (response.status == '200') {
                             this.postSuccess = true;
+
+                            // Update the qty on the view
+                            this.product.stock_text = response.data.stock_text;
+
+                            // Update the quantity
+                            this.product.quantity = response.data.quantity;
+                            this.$refs.qty.maxQuantity = response.data.quantity;
                         } else {
                             this.postError = true;
                         }
                     })
                     .catch(error => { 
                         if (error.response.status == '401') {
-                            window.location.href = '/login?back=/home';
+                            window.location.href = '/login';
+                        } else if (error.response.status == '400') {
+                            this.postError = true;
+                            this.postErrorMessage = error.response.data;
                         } else {
+                            this.postError = true;
                             console.error(error);
                             throw error;
                         }

@@ -58,7 +58,7 @@ class Product extends Model
     public function getRoutesAttribute()
     {
         return [
-            'view'    => route('product.show', $this),
+            'view'    => route('products.show', $this),
             'layaway' => route('layaway.show', $this),
         ];
     }

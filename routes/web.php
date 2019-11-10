@@ -15,10 +15,8 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/products', 'ProductController@index')->name('products');
-Route::get('/product/{product}', 'ProductController@show')->name('product.show');
-
 // Placeholder, in the future this would instead take you to a CC form or cart etc.
-Route::post('/product/{product}/purchase', 'ProductController@purchase')->name('product.purchase');
 
+Route::resource('products', 'ProductController');
+Route::post('/product/{product}/purchase', 'ProductController@purchase')->name('product.purchase');
 Route::get('/product/{product}/layaway', 'LayawayController@show')->name('layaway.show');

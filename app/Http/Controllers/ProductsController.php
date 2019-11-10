@@ -12,7 +12,8 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only('purchase');
+        $this->middleware('auth')
+                ->except(['index', 'show']);
     }
 
     /**
@@ -36,7 +37,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        // Get the product catgories alphabetically
+        $categories = ProductCategory::orderBy('name', 'asc')->pluck('name', 'id');
+
+        return view('products.create')->withCategories($categories);
     }
 
     /**
@@ -70,6 +74,10 @@ class ProductController extends Controller
      */
      public function purchase(Request $request, Product $product)
      {
+        if (! $product->isAvailable()) {
+            return response('Not available', 400);
+        }
+
         // Create the product transaction
         Transaction::create([
             'cost' => $product->cost,
@@ -80,8 +88,11 @@ class ProductController extends Controller
             'transaction_status_id' => 1 // Successfull - Placeholder
         ]);
 
+        // Reload since the observer updated the qty
+        $product->refresh();
+
         // Success
-        return response(200);
+        return response()->json($product);
      }
 
     /**
