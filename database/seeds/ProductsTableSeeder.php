@@ -37,6 +37,14 @@ class ProductsTableSeeder extends Seeder
                 'description' => 'A handy hammer for when you need a hammer but with a bit of extra bit of power.',
                 'cost' => 8.50,
                 'quantity' => 1
+            ],
+            [
+                'product_category_id' => 3, // Food
+                'name' => 'Bushel of Apples',
+                'photo' => null,
+                'description' => 'A delicious bushel of gigantic apples.',
+                'cost' => 40,
+                'quantity' => 0
             ]
         ];
 

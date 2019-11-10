@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Transaction;
+use App\Observers\TransactionObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Register our observers
+        $this->registerObservers();
+    }
+
+    /**
+     * A separate function to register our observers to keep boot clean
+     */
+    public function registerObservers()
+    {
+        Transaction::observe(TransactionObserver::class);
     }
 }

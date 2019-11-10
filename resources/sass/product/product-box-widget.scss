@@ -1,0 +1,24 @@
+/** Product Widget Box **/
+.product-box {
+	padding: 10px;
+	margin-bottom: 0;
+    border:1px solid #eee; 
+
+    .product-title {
+        padding: 5px 0 5px 0;
+    }
+
+    .product-cost {
+        border-top: 1px solid #dadada;
+        padding-top: 5px;
+    }
+
+    .product-text {
+        font-size: 1.4em;
+    }
+
+    .product-title,
+    .product-text {
+        font-weight: bold;
+    }
+}

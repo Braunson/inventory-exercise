@@ -20,7 +20,7 @@ class CreateProductTable extends Migration
             $table->string('photo')->nullable();
             $table->text('description')->nullable();
             $table->decimal('cost', 8, 2)->default(0)->nullable();
-            $table->decimal('quantity', 8, 2)->default(0);
+            $table->decimal('quantity', 8, 0)->default(0);
             $table->timestamps();
             $table->softDeletes();
 

@@ -6,3 +6,10 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Product Related
+@import 'product/product-box-widget';
+@import 'product/product-page-view';
+
+// Vue Component Styles
+@import 'product/quantity-component';

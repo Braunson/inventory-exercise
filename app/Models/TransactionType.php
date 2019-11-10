@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionType extends Model
 {
+    const PAYMENT = 1;
+    const DEPOSIT = 0;
+
     protected $fillable = [
         'name', 
         'slug'

@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Latest Products</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -13,8 +13,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    <div class="container">
+                        <div class="row">
+                            {{-- Loop out the latest products --}}
+                            @forelse ($products as $product)
+                                @include('partials.product-box')
+                            @empty
+                                <p class="alert alert-warning">Looks like there are no products at this time.</p>
+                            @endforelse
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
