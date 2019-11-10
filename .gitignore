@@ -10,3 +10,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+.phpunit-watcher-cache.php
+/.vagrant
+/.homestead/phpmyadmin-placeholder/*
+!/.homestead/phpmyadmin-placeholder/.placeholder

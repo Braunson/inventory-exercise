@@ -1,0 +1,45 @@
+---
+ip: "192.168.10.25"
+memory: 2048
+cpus: 1
+hostname: exercise-homestead
+name: exercise-homestead
+provider: virtualbox
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: "C:/Users/geekybeaver/Documents/GitHub/exercise-braunson"
+      to: "/home/vagrant/exercise"
+    - map: "C:/Users/geekybeaver/Documents/GitHub/exercise-braunson/.homestead/phpmyadmin-placeholder"
+      to: "/home/vagrant/phpmyadmin"
+
+sites:
+    - map: exercise.local
+      to: "/home/vagrant/exercise/public"
+      schedule: true
+    - map: phpmyadmin-exercise.local
+      to: "/home/vagrant/phpmyadmin"
+
+databases:
+    - homestead
+
+# variables:
+#     - key: COMPOSER_AUTH
+#       value: '{"github-oauth": {"github.com": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}}'
+
+# blackfire:
+#     - id: foo
+#       token: bar
+#       client-id: foo
+#       client-token: bar
+
+# ports:
+#     - send: 50000
+#       to: 5000
+#     - send: 7777
+#       to: 777
+#       protocol: udp
