@@ -25,7 +25,8 @@ This is assuming you want to use the project's vagrant box included.
 
 Once you install the project, migrate and seed, you can login using the following test account.
 
-**User:** `tester`
+**Email:** `tester@gmail.com`
+
 **Password:** `secret`
 
 Alternative you can register a new account if you prefer.
