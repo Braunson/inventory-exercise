@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Model;
 
 class Layaway extends Model
@@ -30,6 +31,11 @@ class Layaway extends Model
     public function product()
     {
         return $this->hasOne(Product::class);
+    }
+
+    public function transactions()
+    {
+        return $this->belongsTo(Transaction::class);
     }
     
     /**

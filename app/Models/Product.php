@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Layaway;
 use App\Models\Transaction;
 use App\Models\ProductComment;
+use App\Models\TransactionType;
 use App\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -42,6 +44,11 @@ class Product extends Model
         return $this->hasMany(ProductComment::class);
     }
 
+    public function layaway()
+    {
+        return $this->hasMany(Layaway::class);
+    }
+
     /**
      * Helper to return the full photo path if a photo is set
      */
@@ -65,7 +72,7 @@ class Product extends Model
     {
         return [
             'view'    => route('products.show', $this),
-            'layaway' => route('layaway.show', $this),
+            'layaway' => route('layaway.save', $this),
         ];
     }
 
@@ -91,5 +98,39 @@ class Product extends Model
     public function stockText()
     {
         return (string) $this->isAvailable() ?  number_format($this->quantity) . ' ' . __('In Stock') : __('Out Of Stock');
+    }
+
+    /**
+     * Helper to put a product on layaway and create a fake deposit transaction
+     * @param \App\Models\User  $user
+     * @return boolean
+     */
+    public function putOnLayaway(User $user)
+    {
+        // Half upfront deposit
+        $deposit = (float) $this->cost / 50;
+        $quantity = 1;
+
+        // Create the layway
+        $layaway = $this->layaway()->create([
+            'user_id' => $user->id,
+            'full_cost' => $this->cost,
+            'cost_remaining' => $deposit, // Rough mock in
+            'quantity' => $quantity, // Rough mock in
+            'notes' => 'This is automated test layaway.',
+            'expires_on' => now()->addDays(90)->toDateTime()
+        ]);
+
+        // @TODO move this to an observer on Layaway
+        $layaway->transactions()->create([
+            'cost' => $deposit,
+            'quantity' => $quantity,
+            'product_id' => $this->id,
+            'user_id' => $user->id,
+            'transaction_type_id' => TransactionType::DEPOSIT,
+            'transaction_status_id' => 1 // Successfull - Placeholder
+        ]);
+
+        return $layaway;
     }
 }
