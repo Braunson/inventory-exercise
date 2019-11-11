@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Transaction;
+use App\Models\ProductComment;
 use App\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -36,12 +37,17 @@ class Product extends Model
         return $this->belongsTo(ProductCategory::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(ProductComment::class);
+    }
+
     /**
      * Helper to return the full photo path if a photo is set
      */
     public function getPhotoPathAttribute()
     {
-        return $this->hasPhoto() ? storage_path($this->photo) : null;
+        return $this->hasPhoto() ? asset('storage/' . $this->photo) : null;
     }
 
     /**

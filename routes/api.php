@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Product Comments
+Route::namespace('Api')->prefix('products/{product}')->group(function () {
+    Route::get('comments', 'ProductApiController@getComments');
+    Route::post('comment', 'ProductApiController@saveComment');
+});

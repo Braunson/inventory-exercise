@@ -14,11 +14,13 @@
                 type: Number|String
             }
         },
+
         data() {
             return {
                 quantity: 1
             };
         },
+
         methods: {
             increment(event) {
                 event.preventDefault();
@@ -29,6 +31,7 @@
                     this.quantity++;
                 }
             },
+            
             decrement(event) {
                 event.preventDefault();
 

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             TransactionTypesTableSeeder::class,
             TransactionStatusesTableSeeder::class,
             ProductsTableSeeder::class,
+            ProductCommentsTableSeeder::class,
             // TransactionsTableSeeder::class,
             // LayawaysTableSeeder::class,
         ]);

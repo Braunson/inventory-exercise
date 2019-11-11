@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="row  justify-content-center ">
+        <div class="row justify-content-center">
             <div class="col-md-8 alert alert-success" v-if="postSuccess">
                 <p class="m-0">The purchase was made successfully</p>
             </div>
@@ -14,7 +14,7 @@
                     <img :src="product.photo_path" class="img-responsive">
                 </template>
                 <template v-else>
-                    <img src="//placehold.co/400x400/eeeeee/ffffff&text=Product" class="img-responsive">
+                    <img src="//satyr.io/400x400/eeeeee/ffffff&text=Product" class="img-responsive">
                 </template>
             </div>
 

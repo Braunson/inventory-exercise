@@ -19,12 +19,17 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-require('./filters');
-require('./product-view');
+require('./functions/filters');
+require('./functions/product-view');
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Product View
 Vue.component('quantity', require('./components/QuantityComponent.vue').default);
 Vue.component('product-viewer', require('./components/ProductViewerComponent.vue').default);
+
+// Product Comment
+// Vue.component('comment-form', require('./components/CommentFormComponent.vue').default);
+// Vue.component('comment-view', require('./components/CommentViewComponent.vue').default);
+Vue.component('product-comments', require('./components/ProductCommentsComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

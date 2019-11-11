@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\TransactionType;
 use App\Models\ProductCategory;
+use App\Http\Requests\Product\CreateProductFormRequest;
 
 class ProductController extends Controller
 {
@@ -46,12 +47,25 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param App\Http\Requests\Product\CreateProductFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateProductFormRequest $request)
     {
-        //
+        // Upload the image
+        $imagePath = $request->file('photo')->storeAs(
+            'images/products', time() . '.' . $request->photo->extension(), 'public'
+        );
+
+        // Create the product
+        $product = Product::create(
+            array_merge($request->except('_csrf'), ['photo' => $imagePath])
+        );
+
+        // Redirect the4 user
+        return redirect()
+            ->route('products.index')
+            ->withStatus('Product ' . $product->name . ' was successfully created!');
     }
 
     /**

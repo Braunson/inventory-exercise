@@ -2,7 +2,7 @@
     @if ($product->hasPhoto())
         <img src="{{ storage_path($product->photo) }}" class="img-responsive">
     @else
-        <img src="//placehold.co/250x250/eeeeee/ffffff&text={{ $product->name }}" class="img-responsive">
+        <img src="//satyr.io/250x250/eeeeee/ffffff&text={{ $product->name }}" class="img-responsive">
     @endif
     <div class="product-title">{{ $product->name }}</div>
     <div class="product-cost">
