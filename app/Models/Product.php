@@ -101,13 +101,38 @@ class Product extends Model
     }
 
     /**
-     * Helper to put a product on layaway and create a fake deposit transaction
+     * Check if this product is already on a users layaway list
+     * and if it is, is it paid for or pending still
+     *
      * @param \App\Models\User  $user
      * @return boolean
      */
-    public function putOnLayaway(User $user)
+    public function isAlreadyOnUsersLayaway(User $user)
+    {
+        // Should we restrict first?
+        if (config('LAYAWAY_RESTRICT_PRODUCT') === FALSE) {
+            return false;
+        }
+
+        // Check for this product on the user's layaway list
+        $layaway = $user->layaway()->whereProductId($this->id)->first();
+
+        // Did we find an entry and is it paid off or not?
+        return (bool) (! is_null($layaway) && ! $layaway->isPaidOff());
+    }
+
+
+    /**
+     * Helper to put a product on layaway and create a fake deposit transaction
+     *
+     * @param \App\Models\User  $user
+     * @return boolean
+     */
+    public function moveToLayaway(User $user)
     {
         // Half upfront deposit
+        // Realistically we'd take payment of the user's choosing
+        // Either full upfront or a deposit and then record it accordingly.
         $deposit = (float) $this->cost / 50;
         $quantity = 1;
 

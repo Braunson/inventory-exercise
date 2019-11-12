@@ -1,7 +1,7 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="product-comment-list">
+            <div class="product-comment-list text-center">
                 <span v-show="loading" class="spinner"></span>
                 <ul>
                     <comment-view v-for="comment in comments" :comment="comment" :key="comment.id"></comment-view>

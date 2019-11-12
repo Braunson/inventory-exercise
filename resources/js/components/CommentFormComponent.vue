@@ -1,25 +1,25 @@
 <template>
     <div class="product-comment-box" id="comment">
-        <div class="loader" v-show="loading">
+        <div class="loader text-center" v-show="loading">
             <span class="spinner"></span>  
         </div>
 
         <form method="post" @submit.prevent="submit">
             <input v-model="data.name" 
-                class="input-name" 
+                class="input-name form-control" 
                 type="text" 
                 name="name" 
                 placeholder="Name" 
                 required>
                 
             <textarea v-model="data.message" 
-                class="input-message"
+                class="input-message form-control"
                 name="message" 
                 id="message" 
                 rows="3" 
                 placeholder="Comment here.." 
                 required></textarea>
-            <input :disabled="loading" type="submit" value="Submit Comment">
+            <input :disabled="loading" type="submit" value="Submit Comment" class="btn btn-success mb-0 btn-block">
         </form>
     </div>
 </template>

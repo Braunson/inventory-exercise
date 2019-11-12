@@ -1,6 +1,8 @@
 <template>
     <li transition="slide">
-        <div class="profile"><img :src="avatar" alt=""></div>
+        <div class="profile">
+            <img :src="avatar" :alt="comment.name">
+        </div>
         <div class="comment-message">
             <div class="comment-message-body">
                 <p class="name">{{ comment.name }} <span class="date">{{ comment.time }}</span></p>

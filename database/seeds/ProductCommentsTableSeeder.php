@@ -17,14 +17,12 @@ class ProductCommentsTableSeeder extends Seeder
             [
                 'product_id' => 1,
                 'name' => 'John Doe',
-                'email' => 'johndoe@gmail.com',
                 'message' => 'This is fooBar',
                 'created_at' => now()->toDateTime()
             ],
             [
                 'product_id' => 1,
                 'name' => 'Jane Doe',
-                'email' => 'janedoe@gmail.com',
                 'message' => 'This is fizz buzz!!!',
                 'created_at' => now()->toDateTime()
             ]
