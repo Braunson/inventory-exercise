@@ -20,7 +20,6 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 require('./functions/filters');
-require('./functions/product-view');
 
 // Product View
 Vue.component('quantity', require('./components/QuantityComponent.vue').default);
