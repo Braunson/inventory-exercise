@@ -17,5 +17,10 @@ Route::get('/', 'HomeController@index')->name('home');
 
 // Products
 Route::resource('products', 'ProductController');
-Route::post('/product/{product}/purchase', 'ProductController@purchase')->name('product.purchase');
-Route::get('/product/{product}/layaway', 'LayawayController@save')->name('layaway.save');
+
+Route::get('/product/{product}/layaway', 'LayawayController@save')
+    ->name('layaway.save')
+    ->middleware('auth');
+    
+Route::post('/product/{product}/purchase', '\App\Http\Controllers\Api\ProductApiController@purchase')
+    ->name('product.purchase');

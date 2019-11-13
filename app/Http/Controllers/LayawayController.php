@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class LayawayController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Save the products to the users layaway.
      *
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
@@ -22,30 +23,28 @@ class LayawayController extends Controller
     {
         $user = auth()->user();
 
-        // Check product quantity
-        if (! $product->isAvailable()) {
-            return redirect()
-                    ->route('home')
-                    ->withStatusError('warning')
-                    ->withStatus('Layaway could not be completed due to in-availabilty');
+        if ($check = $this->layawayCheck($product, $user)) {
+            $product->moveToLayaway($user);
         }
 
-        // Is the product already on the user's layaway?
-        // For our online store rules, they can only have one layaway at a time
-        // This may differe depending on other "store" scopes. :)
-        if ($product->isAlreadyOnUsersLayaway($user)) {
-            return redirect()
-                    ->route('products.show', $product)
-                    ->withStatusError('danger')
-                    ->withStatus('Could not add to layaway, you already have this product on layaway.');
-        }
+        $class   = $check ? 'success' : 'danger';
+        $message = $check ? __('layaway.success', ['product' => $product->name]) : __('layaway.failed');
 
-        // Put the product on layway
-        $product->moveToLayaway($user);
-
-        // Redirect the user back
         return redirect()
                 ->route('products.show', $product)
-                ->withStatus('Success! The product "' . $product->name . '" has been put on your layaway');
+                ->withStatusError($class)
+                ->withStatus($message);
+    }
+
+    /**
+     * Check if the product is accessible to the user
+     *
+     * @param \App\Models\Product  $product
+     * @param \App\Models\User  $user
+     * @return boolean
+     */
+    protected function layawayCheck(Product $product, User $user)
+    {
+        return (bool) (! $product->isAvailable() || ! $product->isAlreadyOnUsersLayaway($user));
     }
 }
