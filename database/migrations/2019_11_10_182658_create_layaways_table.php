@@ -19,7 +19,7 @@ class CreateLayawaysTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->decimal('full_cost', 8, 2);
             $table->decimal('cost_remaining', 8, 2)->nullable();
-            $table->decimal('quantity', 8, 2)->default(1);
+            $table->integer('quantity')->default(0);
             $table->text('notes')->nullable();
             $table->timestamp('expires_on');
             $table->timestamps();

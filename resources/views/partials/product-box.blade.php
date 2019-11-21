@@ -1,6 +1,6 @@
 <div class="col-md-3 product-box">
     @if ($product->hasPhoto())
-        <img src="{{ storage_path($product->photo) }}" class="img-responsive">
+        <img src="{{ $product->photo_path }}" class="img-responsive">
     @else
         <img src="//satyr.io/250x250/eeeeee/ffffff&text={{ $product->name }}" class="img-responsive">
     @endif

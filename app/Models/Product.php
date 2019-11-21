@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\ProductComment;
 use App\Models\TransactionType;
 use App\Models\ProductCategory;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -54,7 +55,7 @@ class Product extends Model
      */
     public function getPhotoPathAttribute()
     {
-        return $this->hasPhoto() ? asset('storage/' . $this->photo) : null;
+        return $this->hasPhoto() ? Storage::url($this->photo) : null;
     }
 
     /**

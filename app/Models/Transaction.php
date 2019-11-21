@@ -27,16 +27,16 @@ class Transaction extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class);
     }
 
     public function type()
     {
-        return $this->hasOne(TransactionType::class);
+        return $this->hasOne(TransactionType::class, 'id', 'transaction_type_id');
     }
 
     public function status()
     {
-        return $this->hasOne(TransactionStatus::class);
+        return $this->hasOne(TransactionStatus::class, 'id', 'transaction_status_id');
     }
 }
